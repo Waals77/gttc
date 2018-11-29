@@ -18,10 +18,8 @@ package tests
 
 import (
 	"testing"
-
 	"math/big"
 
-	"github.com/TTCECO/gttc/common"
 	"github.com/TTCECO/gttc/params"
 )
 
