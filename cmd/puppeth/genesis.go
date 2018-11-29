@@ -35,8 +35,6 @@ type cppEthereumGenesisSpec struct {
 	Params     struct {
 		AccountStartNonce       hexutil.Uint64 `json:"accountStartNonce"`
 		HomesteadForkBlock      hexutil.Uint64 `json:"homesteadForkBlock"`
-		EIP150ForkBlock         hexutil.Uint64 `json:"EIP150ForkBlock"`
-		EIP158ForkBlock         hexutil.Uint64 `json:"EIP158ForkBlock"`
 		ByzantiumForkBlock      hexutil.Uint64 `json:"byzantiumForkBlock"`
 		ConstantinopleForkBlock hexutil.Uint64 `json:"constantinopleForkBlock"`
 		NetworkID               hexutil.Uint64 `json:"networkID"`
@@ -98,8 +96,6 @@ func newCppEthereumGenesisSpec(network string, genesis *core.Genesis) (*cppEther
 	}
 	spec.Params.AccountStartNonce = 0
 	spec.Params.HomesteadForkBlock = (hexutil.Uint64)(genesis.Config.HomesteadBlock.Uint64())
-	spec.Params.EIP150ForkBlock = (hexutil.Uint64)(genesis.Config.EIP150Block.Uint64())
-	spec.Params.EIP158ForkBlock = (hexutil.Uint64)(genesis.Config.EIP158Block.Uint64())
 	spec.Params.ByzantiumForkBlock = (hexutil.Uint64)(genesis.Config.ByzantiumBlock.Uint64())
 	spec.Params.ConstantinopleForkBlock = (hexutil.Uint64)(math.MaxUint64)
 
@@ -173,13 +169,6 @@ type parityChainSpec struct {
 				DurationLimit          *hexutil.Big `json:"durationLimit"`
 				BlockReward            *hexutil.Big `json:"blockReward"`
 				HomesteadTransition    uint64       `json:"homesteadTransition"`
-				EIP150Transition       uint64       `json:"eip150Transition"`
-				EIP160Transition       uint64       `json:"eip160Transition"`
-				EIP161abcTransition    uint64       `json:"eip161abcTransition"`
-				EIP161dTransition      uint64       `json:"eip161dTransition"`
-				EIP649Reward           *hexutil.Big `json:"eip649Reward"`
-				EIP100bTransition      uint64       `json:"eip100bTransition"`
-				EIP649Transition       uint64       `json:"eip649Transition"`
 			} `json:"params"`
 		} `json:"Ethash"`
 	} `json:"engine"`
@@ -190,13 +179,6 @@ type parityChainSpec struct {
 		GasLimitBoundDivisor hexutil.Uint64 `json:"gasLimitBoundDivisor"`
 		NetworkID            hexutil.Uint64 `json:"networkID"`
 		MaxCodeSize          uint64         `json:"maxCodeSize"`
-		EIP155Transition     uint64         `json:"eip155Transition"`
-		EIP98Transition      uint64         `json:"eip98Transition"`
-		EIP86Transition      uint64         `json:"eip86Transition"`
-		EIP140Transition     uint64         `json:"eip140Transition"`
-		EIP211Transition     uint64         `json:"eip211Transition"`
-		EIP214Transition     uint64         `json:"eip214Transition"`
-		EIP658Transition     uint64         `json:"eip658Transition"`
 	} `json:"params"`
 
 	Genesis struct {
@@ -273,26 +255,12 @@ func newParityChainSpec(network string, genesis *core.Genesis, bootnodes []strin
 	spec.Engine.Ethash.Params.DurationLimit = (*hexutil.Big)(params.DurationLimit)
 	spec.Engine.Ethash.Params.BlockReward = (*hexutil.Big)(ethash.FrontierBlockReward)
 	spec.Engine.Ethash.Params.HomesteadTransition = genesis.Config.HomesteadBlock.Uint64()
-	spec.Engine.Ethash.Params.EIP150Transition = genesis.Config.EIP150Block.Uint64()
-	spec.Engine.Ethash.Params.EIP160Transition = genesis.Config.EIP155Block.Uint64()
-	spec.Engine.Ethash.Params.EIP161abcTransition = genesis.Config.EIP158Block.Uint64()
-	spec.Engine.Ethash.Params.EIP161dTransition = genesis.Config.EIP158Block.Uint64()
-	spec.Engine.Ethash.Params.EIP649Reward = (*hexutil.Big)(ethash.ByzantiumBlockReward)
-	spec.Engine.Ethash.Params.EIP100bTransition = genesis.Config.ByzantiumBlock.Uint64()
-	spec.Engine.Ethash.Params.EIP649Transition = genesis.Config.ByzantiumBlock.Uint64()
 
 	spec.Params.MaximumExtraDataSize = (hexutil.Uint64)(params.MaximumExtraDataSize)
 	spec.Params.MinGasLimit = (hexutil.Uint64)(params.MinGasLimit)
 	spec.Params.GasLimitBoundDivisor = (hexutil.Uint64)(params.GasLimitBoundDivisor)
 	spec.Params.NetworkID = (hexutil.Uint64)(genesis.Config.ChainId.Uint64())
 	spec.Params.MaxCodeSize = params.MaxCodeSize
-	spec.Params.EIP155Transition = genesis.Config.EIP155Block.Uint64()
-	spec.Params.EIP98Transition = math.MaxUint64
-	spec.Params.EIP86Transition = math.MaxUint64
-	spec.Params.EIP140Transition = genesis.Config.ByzantiumBlock.Uint64()
-	spec.Params.EIP211Transition = genesis.Config.ByzantiumBlock.Uint64()
-	spec.Params.EIP214Transition = genesis.Config.ByzantiumBlock.Uint64()
-	spec.Params.EIP658Transition = genesis.Config.ByzantiumBlock.Uint64()
 
 	spec.Genesis.Seal.Ethereum.Nonce = (hexutil.Bytes)(make([]byte, 8))
 	binary.LittleEndian.PutUint64(spec.Genesis.Seal.Ethereum.Nonce[:], genesis.Nonce)

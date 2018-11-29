@@ -32,16 +32,10 @@ func TestTransaction(t *testing.T) {
 	})
 	txt.config(`^EIP155/`, params.ChainConfig{
 		HomesteadBlock: big.NewInt(0),
-		EIP150Block:    big.NewInt(0),
-		EIP155Block:    big.NewInt(0),
-		EIP158Block:    big.NewInt(0),
 		ChainId:        big.NewInt(1),
 	})
 	txt.config(`^Byzantium/`, params.ChainConfig{
 		HomesteadBlock: big.NewInt(0),
-		EIP150Block:    big.NewInt(0),
-		EIP155Block:    big.NewInt(0),
-		EIP158Block:    big.NewInt(0),
 		ByzantiumBlock: big.NewInt(0),
 	})
 

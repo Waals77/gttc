@@ -758,7 +758,7 @@ func (a *Alien) Finalize(chain consensus.ChainReader, header *types.Header, stat
 	if !chain.Config().Alien.SideChain {
 		accumulateRewards(chain.Config(), state, header, snap, refundGas)
 	}
-	header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
+	header.Root = state.IntermediateRoot(true)
 	// No uncle block
 	header.UncleHash = types.CalcUncleHash(nil)
 
